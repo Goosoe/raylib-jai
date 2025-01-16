@@ -5,7 +5,9 @@ naive regex-based code for turning raylib.h into raylib.jai
 '''
 import re
 import os.path
+import shutil
 from io import StringIO
+
 
 ctx = dict()
 
@@ -366,6 +368,9 @@ def generate_jai_bindings(header_filename, output_filename):
         p("""    winmm   :: #library,system,link_always "winmm";""")
         p(f"    {native_lib_name} :: #library,no_dll \"{path_to_native_lib}\";")
         p("}")
+        p("else #if OS == .LINUX {")
+        p(f"    {native_lib_name} :: #library,system,link_always \"libraylib\";")
+        p("}")
         p("""#import "Math";""")
     
     print(f"Wrote Jai bindings file '{output_filename}' from C header '{header_filename}'.")
@@ -374,8 +379,8 @@ def generate_jai_bindings(header_filename, output_filename):
 def main():
     # change to script directory
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
-    generate_jai_bindings("include/raylib.h", "raylib/old_module.jai")
+    shutil.copy("raylib/module.jai", "raylib/old_module.jai")
+    generate_jai_bindings("include/raylib.h", "raylib/module.jai")
 
 if __name__ == "__main__":
     main()
