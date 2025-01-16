@@ -1,6 +1,6 @@
 '''
 
-naive regex-based code for turning raylib.h into raylib.jai
+naive regex-based code for turning raylib.h into module.jai
 
 '''
 import re

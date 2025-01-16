@@ -46,22 +46,15 @@ Run the example `.exe` files from the `examples/` directory.
 
 ## Regenerating the bindings
 
-A `python` script [generator.py](generator.py) reads `raylib.h` and generates [raylib.jai](raylib.jai).
+Run the `python` script [generator.py](generator.py) that reads `raylib.h` and generates [module.jai](module.jai). The previously written module is saved in old_module.jai.
+After generating the bindings by running the python script, copy the "raylib" folder and paste it in "yourProject/modules". Now, when building your project, you can use the following import:
 
+ ```#import "raylib";```.
+ 
+If you are on Linux, it searches for libraylib.so in the system. This is the default place of the library when installing on Linux (using package manager, quick start or manual build method).
+In raylib/lib/ there are .dll files, use it at your own risk. It is always recommended to run your own built .dll files. Bear in mind that those .dll files are only for Windows as well.
 
 models/models_mesh_generation.jai takes a while to close
 models/models_point_rendering.jai crahes when unloading model
 shaders/shaders_basic_pbr.jai takes a while to close
 
-## What does this fork has of difference?
-This fork is my attempt to make the bindings work with Linux out of the box. 
-
-After generating the bindings by running the python script, copy the "raylib" folder and paste it in "yourProject/modules". Now, when building your project, you can use
-
- ```#import "raylib";```.
-    
-Before, the new generated module would be written in "old_module.jai". This was counter-intuitive. Now it saves the current module in "old_module.jai" and the newly generated one is saved in "module.jai".
-
-In "module.jai", if we are on Linux, it now searches for libraylib.so in the system. This was the default place of the library when installing on Linux (using package manager or quick start or manual build method).
-
-In raylib/lib/ there are .dll files, use it at your own risk. I recommend deleting them and replacing with your own built .dll files. Bear in mind that those .dll files are only for Windows.
